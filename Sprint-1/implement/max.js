@@ -1,4 +1,4 @@
-function max(elements) {
+function findMax(elements) {
   // First, we filter the list to keep ONLY numbers
   const onlyNumbers = elements.filter((item) => typeof item === "number");
 
@@ -11,4 +11,4 @@ function max(elements) {
   return Math.max(...onlyNumbers);
 }
 
-module.exports = max;
+module.exports = findMax;
