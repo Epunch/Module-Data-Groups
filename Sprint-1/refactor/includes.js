@@ -1,8 +1,7 @@
-// Refactor the implementation of includes to use a for...of loop
-
+// This function checks if the target exists in the list
 function includes(list, target) {
-  for (let index = 0; index < list.length; index++) {
-    const element = list[index];
+  // We use for...of for a cleaner syntax (refactoring)
+  for (const element of list) {
     if (element === target) {
       return true;
     }
