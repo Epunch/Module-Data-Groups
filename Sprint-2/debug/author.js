@@ -10,7 +10,8 @@ const author = {
   age: 40,
   alive: true,
 };
-
-for (const value of author) {
+// Error: Objects are not iterable, so we cannot use for...of directly on them.
+// Fix: We use Object.values() to turn the object values into an array first.
+for (const value of Object.values(author)) {
   console.log(value);
 }
