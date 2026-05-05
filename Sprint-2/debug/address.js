@@ -11,5 +11,7 @@ const address = {
   country: "England",
   postcode: "XYZ 123",
 };
-
-console.log(`My house number is ${address[0]}`);
+// The error was using [0] like an array.
+// In JavaScript, we use the property name to get the value from an object.
+// We use the dot notation here to get houseNumber.
+console.log("My house number is " + address.houseNumber);
