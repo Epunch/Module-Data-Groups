@@ -10,11 +10,14 @@ function invert(obj) {
   const invertedObj = {};
 
   for (const [key, value] of Object.entries(obj)) {
-    invertedObj.key = value;
+    // We must use [value] so the value of the variable becomes the key
+    invertedObj[value] = key;
   }
 
   return invertedObj;
 }
+
+module.exports = invert;
 
 // a) What is the current return value when invert is called with { a : 1 }
 
