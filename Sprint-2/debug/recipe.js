@@ -10,6 +10,13 @@ const recipe = {
   ingredients: ["olive oil", "tomatoes", "salt", "pepper"],
 };
 
-console.log(`${recipe.title} serves ${recipe.serves}
-  ingredients:
-${recipe}`);
+// Error: Logging the whole object 'recipe' results in "[object Object]".
+// Fix: We need to access 'recipe.ingredients' and log each item separately.
+
+console.log(recipe.title + " serves " + recipe.serves);
+console.log("ingredients:");
+
+// We use a loop to log each ingredient on a new line
+for (const item of recipe.ingredients) {
+  console.log(item);
+}
