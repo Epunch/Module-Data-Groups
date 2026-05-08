@@ -1,3 +1,24 @@
+// Function to handle showing the quote on the screen
+function displayQuote() {
+  // Use the provided function to get a random quote object
+  const randomQuote = pickFromArray(quotes);
+
+  // Find the HTML elements by their IDs
+  const quoteParagraph = document.getElementById("quote");
+  const authorParagraph = document.getElementById("author");
+
+  // Update the text content
+  quoteParagraph.innerText = randomQuote.quote;
+  authorParagraph.innerText = randomQuote.author;
+}
+
+// Show a quote immediately when the page loads
+window.onload = displayQuote;
+
+// Connect the button to the function
+const newQuoteButton = document.getElementById("new-quote");
+newQuoteButton.onclick = displayQuote;
+
 // DO NOT EDIT BELOW HERE
 
 // pickFromArray is a function which will return one item, at
