@@ -18,7 +18,24 @@ window.onload = displayQuote;
 // Connect the button to the function
 const newQuoteButton = document.getElementById("new-quote");
 newQuoteButton.onclick = displayQuote;
+// --- Auto-play Logic (Stretch Goal) ---
 
+let quoteTimer = null; // Variable to store the interval timer
+
+const autoplayCheck = document.getElementById("autoplay-check");
+const autoplayStatus = document.getElementById("autoplay-status");
+
+autoplayCheck.onchange = function () {
+  if (autoplayCheck.checked) {
+    autoplayStatus.innerText = "auto-play: ON";
+    // Change quote every 5 seconds for testing
+    quoteTimer = setInterval(displayQuote, 5000);
+  } else {
+    autoplayStatus.innerText = "auto-play: OFF";
+    // Stop the timer
+    clearInterval(quoteTimer);
+  }
+};
 // DO NOT EDIT BELOW HERE
 
 // pickFromArray is a function which will return one item, at
