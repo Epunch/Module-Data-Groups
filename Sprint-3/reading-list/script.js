@@ -21,3 +21,22 @@ const books = [
   },
 ];
 
+function readingList(booksArray) {
+  const listVariable = document.querySelector("#reading-list");
+
+  booksArray.forEach((book) => {
+    const li = document.createElement("li");
+
+    li.innerHTML = `<p>${book.title} - ${book.author}</p><img src="${book.bookCoverImage}" />`;
+
+    if (book.alreadyRead) {
+      li.style.backgroundColor = "green";
+    } else {
+      li.style.backgroundColor = "red";
+    }
+
+    listVariable.appendChild(li);
+  });
+}
+
+readingList(books);
