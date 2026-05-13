@@ -10,7 +10,7 @@ beforeEach(async () => {
     runScripts: "dangerously",
   });
 
-  // do this so students can use element.innerText which jsdom does not implement
+  // Allow using element.innerText, which jsdom does not implement by default
   Object.defineProperty(page.window.HTMLElement.prototype, "innerText", {
     get() {
       return this.textContent;
@@ -42,6 +42,7 @@ describe("Reading list", () => {
     expect(readingList).toHaveTextContent("The Pragmatic Programmer");
     expect(readingList).toHaveTextContent("Andrew Hunt");
   });
+
   test("each book in the list has an image", () => {
     const firstLi = page.window.document.querySelector(
       "#reading-list > :first-child"
@@ -64,20 +65,21 @@ describe("Reading list", () => {
       `<img src="https://blackwells.co.uk/jacket/l/9780135957059.jpg" />`
     );
   });
+
   test("background color changes depending on whether book has been read", () => {
     const firstLi = page.window.document.querySelector(
       "#reading-list > :first-child"
     );
-    expect(firstLi).toHaveStyle({ backgroundColor: "red" });
+    expect(firstLi).toHaveStyle({ backgroundColor: "rgb(255, 0, 0)" }); // Red
 
     const secondLi = page.window.document.querySelector(
       "#reading-list > :nth-child(2)"
     );
-    expect(secondLi).toHaveStyle({ backgroundColor: "green" });
+    expect(secondLi).toHaveStyle({ backgroundColor: "rgb(0, 128, 0)" }); // Green
 
     const thirdLi = page.window.document.querySelector(
       "#reading-list > :nth-child(3)"
     );
-    expect(thirdLi).toHaveStyle({ backgroundColor: "green" });
+    expect(thirdLi).toHaveStyle({ backgroundColor: "rgb(0, 128, 0)" }); // Green
   });
 });
