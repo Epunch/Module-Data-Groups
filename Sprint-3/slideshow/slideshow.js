@@ -14,3 +14,8 @@ const autoForwardBtn = document.querySelector("#auto-forward");
 const autoBackwardBtn = document.querySelector("#auto-backward");
 
 const stopBtn = document.querySelector("#stop");
+let currentIndex = 0;
+
+function showImage() {
+  image.src = images[currentIndex];
+}
