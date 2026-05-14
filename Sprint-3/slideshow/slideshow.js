@@ -4,98 +4,76 @@ const images = [
   "./assets/cute-cat-c.jpg",
 ];
 
-// Select elements
-const image = document.querySelector("#carousel-img");
-
+const imgElement = document.querySelector("#carousel-img");
 const forwardBtn = document.querySelector("#forward-btn");
 const backwardBtn = document.querySelector("#backward-btn");
-
 const autoForwardBtn = document.querySelector("#auto-forward");
 const autoBackwardBtn = document.querySelector("#auto-backward");
-
 const stopBtn = document.querySelector("#stop");
 const delayInput = document.querySelector("#delay-input");
 
-// Current image index
 let currentIndex = 0;
+let intervalId = null;
 
-// Interval variable
-let intervalId;
-
-// Show image function
-function showImage() {
-  image.src = images[currentIndex];
-}
-
-// Forward button
-forwardBtn.addEventListener("click", function () {
-  currentIndex++;
-
-  if (currentIndex >= images.length) {
-    currentIndex = 0;
+function updateImage() {
+  // Check if imgElement exists before setting its source
+  if (imgElement) {
+    imgElement.src = images[currentIndex];
   }
-
-  showImage();
-});
-
-// Backward button
-backwardBtn.addEventListener("click", function () {
-  currentIndex--;
-
-  if (currentIndex < 0) {
-    currentIndex = images.length - 1;
-  }
-
-  showImage();
-});
-
-// Disable auto buttons
-function disableAutoButtons() {
-  autoForwardBtn.disabled = true;
-  autoBackwardBtn.disabled = true;
 }
 
-// Enable auto buttons
-function enableAutoButtons() {
-  autoForwardBtn.disabled = false;
-  autoBackwardBtn.disabled = false;
+function nextImage() {
+  // Move to next index and wrap around to 0 if at the end
+  currentIndex = (currentIndex + 1) % images.length;
+  updateImage();
 }
 
-// Auto forward
-autoForwardBtn.addEventListener("click", function () {
-  disableAutoButtons();
-  const delay = Number(delayInput.value);
+function prevImage() {
+  // Move to previous index and wrap around to the end if at the start
+  currentIndex = (currentIndex - 1 + images.length) % images.length;
+  updateImage();
+}
 
-  intervalId = setInterval(function () {
-    currentIndex++;
+// Add event listeners for manual navigation buttons
+if (forwardBtn) {
+  forwardBtn.addEventListener("click", nextImage);
+}
+if (backwardBtn) {
+  backwardBtn.addEventListener("click", prevImage);
+}
 
-    if (currentIndex >= images.length) {
-      currentIndex = 0;
-    }
-
-    showImage();
-  }, delay);
-});
-
-// Auto backward
-autoBackwardBtn.addEventListener("click", function () {
-  disableAutoButtons();
-  const delay = Number(delayInput.value);
-
-  intervalId = setInterval(function () {
-    currentIndex--;
-
-    if (currentIndex < 0) {
-      currentIndex = images.length - 1;
-    }
-
-    showImage();
-  }, delay);
-});
-
-// Stop button
-stopBtn.addEventListener("click", function () {
+function startAutoSlideshow(isForward) {
+  // Clear any existing interval to prevent overlapping timers
   clearInterval(intervalId);
 
-  enableAutoButtons();
-});
+  // Get delay from input or use 2000ms as default
+  const delay = delayInput ? (parseInt(delayInput.value) || 2000) : 2000;
+
+  // Disable auto buttons during the slideshow
+  if (autoForwardBtn) autoForwardBtn.disabled = true;
+  if (autoBackwardBtn) autoBackwardBtn.disabled = true;
+
+  intervalId = setInterval(() => {
+    isForward ? nextImage() : prevImage();
+  }, delay);
+}
+
+// Add event listeners for automatic slideshow buttons
+if (autoForwardBtn) {
+  autoForwardBtn.addEventListener("click", () => startAutoSlideshow(true));
+}
+if (autoBackwardBtn) {
+  autoBackwardBtn.addEventListener("click", () => startAutoSlideshow(false));
+}
+
+if (stopBtn) {
+  stopBtn.addEventListener("click", () => {
+    clearInterval(intervalId);
+    // Re-enable auto buttons when stopping
+    if (autoForwardBtn) autoForwardBtn.disabled = false;
+    if (autoBackwardBtn) autoBackwardBtn.disabled = false;
+  });
+}
+
+// Initialize the first image on load
+updateImage();
