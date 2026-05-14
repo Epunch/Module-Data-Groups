@@ -19,3 +19,21 @@ let currentIndex = 0;
 function showImage() {
   image.src = images[currentIndex];
 }
+forwardBtn.addEventListener("click", function () {
+  currentIndex++;
+
+  if (currentIndex >= images.length) {
+    currentIndex = 0;
+  }
+
+  showImage();
+});
+backwardBtn.addEventListener("click", function () {
+  currentIndex--;
+
+  if (currentIndex < 0) {
+    currentIndex = images.length - 1;
+  }
+
+  showImage();
+});
