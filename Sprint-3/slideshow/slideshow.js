@@ -14,6 +14,7 @@ const autoForwardBtn = document.querySelector("#auto-forward");
 const autoBackwardBtn = document.querySelector("#auto-backward");
 
 const stopBtn = document.querySelector("#stop");
+const delayInput = document.querySelector("#delay-input");
 
 // Current image index
 let currentIndex = 0;
@@ -63,6 +64,7 @@ function enableAutoButtons() {
 // Auto forward
 autoForwardBtn.addEventListener("click", function () {
   disableAutoButtons();
+  const delay = Number(delayInput.value);
 
   intervalId = setInterval(function () {
     currentIndex++;
@@ -72,12 +74,13 @@ autoForwardBtn.addEventListener("click", function () {
     }
 
     showImage();
-  }, 2000);
+  }, delay);
 });
 
 // Auto backward
 autoBackwardBtn.addEventListener("click", function () {
   disableAutoButtons();
+  const delay = Number(delayInput.value);
 
   intervalId = setInterval(function () {
     currentIndex--;
@@ -87,7 +90,7 @@ autoBackwardBtn.addEventListener("click", function () {
     }
 
     showImage();
-  }, 2000);
+  }, delay);
 });
 
 // Stop button
